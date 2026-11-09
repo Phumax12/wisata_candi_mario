@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 
 
 class SignInScreen extends StatefulWidget {
-  SignInScreen({super.key});
+  const SignInScreen({super.key});
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -15,9 +15,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
   final TextEditingController _passwordController = TextEditingController();
 
-  String _errorText = '';
+  final String _errorText = '';
   bool _obscurePassword = true;
-  bool _isSignedIn = false;
+  final bool _isSignedIn = false;
 
   @override
   Widget build(BuildContext context) {

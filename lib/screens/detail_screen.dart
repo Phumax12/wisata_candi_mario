@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:wisata_candi/models/candi.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
+import 'package:wisata_candi/providers/favorite_provider.dart';
 
 class DetailScreen extends StatelessWidget {
   final Candi candi;
+
   const DetailScreen({super.key, required this.candi});
 
   @override
   Widget build(BuildContext context) {
+    // 2. Memantau status favorit dengan benar
+    final isFav = context.watch<FavoriteProvider>().isFavorite(candi.name);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -28,24 +34,24 @@ class DetailScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                // 2. Tombol back
+                // 2. Tombol back (Diperbaiki: Kembali ke halaman sebelumnya)
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.deepPurple[100]?.withValues(alpha: 0.8),
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context); // Fungsi kembali yang benar
+                      },
                       icon: const Icon(Icons.arrow_back),
                     ),
                   ),
                 ),
               ],
             ),
-
             // DetailInfo
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -53,7 +59,6 @@ class DetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 16),
-
                   // Info atas: nama + favorit
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,13 +68,18 @@ class DetailScreen extends StatelessWidget {
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
+                      // Diperbaiki: Tombol favorit yang berfungsi penuh
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.favorite_border),
+                        onPressed: () {
+                          context.read<FavoriteProvider>().toggle(candi.name);
+                        },
+                        icon: Icon(
+                          isFav ? Icons.favorite : Icons.favorite_border,
+                          color: isFav ? Colors.red : null,
+                        ),
                       ),
                     ],
                   ),
-
                   // Info tengah
                   const SizedBox(height: 16),
                   Row(children: [
@@ -77,8 +87,7 @@ class DetailScreen extends StatelessWidget {
                     const SizedBox(width: 8),
                     const SizedBox(
                       width: 70,
-                      child: Text('Lokasi',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      child: Text('Lokasi', style: TextStyle(fontWeight: FontWeight.bold)),
                     ),
                     Text(': ${candi.location}'),
                   ]),
@@ -87,8 +96,7 @@ class DetailScreen extends StatelessWidget {
                     const SizedBox(width: 8),
                     const SizedBox(
                       width: 70,
-                      child: Text('Dibangun',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      child: Text('Dibangun', style: TextStyle(fontWeight: FontWeight.bold)),
                     ),
                     Text(': ${candi.built}'),
                   ]),
@@ -97,17 +105,14 @@ class DetailScreen extends StatelessWidget {
                     const SizedBox(width: 8),
                     const SizedBox(
                       width: 70,
-                      child: Text('Tipe',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      child: Text('Tipe', style: TextStyle(fontWeight: FontWeight.bold)),
                     ),
                     Text(': ${candi.type}'),
                   ]),
-
                   // Pemisah
                   const SizedBox(height: 16),
                   Divider(color: Colors.deepPurple.shade100),
                   const SizedBox(height: 16),
-
                   // Info bawah
                   const Text(
                     'Deskripsi',
@@ -118,7 +123,6 @@ class DetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             // DetailGallery
             Padding(
               padding: const EdgeInsets.all(16),
