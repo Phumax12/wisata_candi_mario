@@ -24,7 +24,15 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Column(
         children: [
       //todo: 4. buat textfield pencarian sebagai anak dari ocolumn
+      Padding(padding: EdgeInsets.all(8)),
       //todo: 5. buat Lstview hasil pencarian sebagai anak dari column
+      ListView.builder(
+        itemCount: _filteredCandis.length,
+        itemBuilder: (context, index) {
+          final Candi = _filteredCandis[index];
+          return Card();
+        }
+        )
         ],
       )
       
