@@ -4,7 +4,7 @@ import 'package:wisata_candi/data/candi_data.dart'; // 1. Diperbaiki: Ditambahka
 import 'package:wisata_candi/screens/detail_screen.dart'; // 2. Diperbaiki: Import DetailScreen sesuai lokasi filemu
 import 'package:wisata_candi/providers/favorite_provider.dart';
 import 'package:wisata_candi/providers/auth_provider.dart';
-
+import 'package:wisata_candi/screens/search_screen.dart';
 // 3. Diperbaiki: Fungsi main() utama diletakkan di luar class dengan MultiProvider
 void main() {
   runApp(
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: DetailScreen(candi: candiList[1]),
+      home : DetailScreen(candi: candiList[1]),
     );
   }
 }
