@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wisata_candi/data/candi_data.dart'; // 1. Diperbaiki: Ditambahkan titik koma (;)
-import 'package:wisata_candi/screens/detail_screen.dart'; // 2. Diperbaiki: Import DetailScreen sesuai lokasi filemu
 import 'package:wisata_candi/providers/favorite_provider.dart';
 import 'package:wisata_candi/providers/auth_provider.dart';
-import 'package:wisata_candi/screens/search_screen.dart';
-// 3. Diperbaiki: Fungsi main() utama diletakkan di luar class dengan MultiProvider
+import 'package:wisata_candi/screens/home_screen.dart';
+
 void main() {
   runApp(
     MultiProvider(
@@ -24,13 +22,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Wisata Candi',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.deepPurple),
+          titleTextStyle: TextStyle(
+            color: Colors.deepPurple,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+        ).copyWith(primary: Colors.deepPurple, surface: Colors.deepPurple[50]),
         useMaterial3: true,
       ),
-      home : DetailScreen(candi: candiList[1]),
+      home: const HomeScreen(),
     );
   }
 }

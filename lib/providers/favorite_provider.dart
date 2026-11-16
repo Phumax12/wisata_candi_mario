@@ -5,8 +5,7 @@ class FavoriteProvider extends ChangeNotifier {
 
   int get count => _favorites.length;
 
-  bool isFavorite(String name) =>
-      _favorites.contains(name);
+  bool isFavorite(String name) => _favorites.contains(name);
 
   void toggle(String name) {
     if (_favorites.contains(name)) {
@@ -14,6 +13,11 @@ class FavoriteProvider extends ChangeNotifier {
     } else {
       _favorites.add(name);
     }
+    notifyListeners();
+  }
+
+  void clearAll() {
+    _favorites.clear();
     notifyListeners();
   }
 }
