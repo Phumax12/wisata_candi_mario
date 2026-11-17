@@ -1,46 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:wisata_candi/providers/favorite_provider.dart';
-import 'package:wisata_candi/providers/auth_provider.dart';
-import 'package:wisata_candi/screens/home_screen.dart';
-
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => FavoriteProvider()),
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MaterialApp(
+    title: 'Interaction',
+    home: HomeScreen(),
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String actionLabel = 'Belum ada aksi';
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Wisata Candi',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          iconTheme: IconThemeData(color: Colors.deepPurple),
-          titleTextStyle: TextStyle(
-            color: Colors.deepPurple,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ).copyWith(primary: Colors.deepPurple, surface: Colors.deepPurple[50]),
-        useMaterial3: true,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Interaction'),
       ),
-      home: const HomeScreen(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  actionLabel = 'Pengguna melakukan Tap';
+                });
+              },
+              onDoubleTap: () {
+                setState(() {
+                  actionLabel = 'Pengguna melakukan Double Tap';
+                });
+              },
+              onLongPress: () {
+                setState(() {
+                  actionLabel = 'Pengguna melakukan Long Press';
+                });
+              },
+              child: Container(
+                height: 50,
+                width: 150,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Aksi',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(actionLabel),
+          ],
+        ),
+      ),
     );
   }
 }
